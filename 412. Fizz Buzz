@@ -1,0 +1,29 @@
+public class Solution {
+    public List<String> fizzBuzz(int n) {
+        // create a list of strings to be returned
+        List<String> answer = new ArrayList<>();
+        // check to see if n is negative
+        if(n<0)
+            return answer;
+        // for each number in the range of 1 to n inclusive
+        for(int i=1;i<=n;i++){
+            // if divisible by 3 and 5
+            if(i%3==0 && i%5 ==0)
+                answer.add("FizzBuzz");
+            // if divisible by 3
+            else if(i%3==0){
+                answer.add("Fizz");
+            }
+            // if divisible by 5
+            else if(i%5==0){
+                answer.add("Buzz");
+            }
+            // if all else fails
+            else{
+                answer.add(Integer.toString(i));
+            }
+        }
+        // return list of strings generated as the final answer
+        return answer;
+    }
+}
