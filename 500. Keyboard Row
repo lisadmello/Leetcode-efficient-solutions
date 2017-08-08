@@ -1,0 +1,69 @@
+public class Solution {
+    String row = "";
+    public String[] findWords(String[] words) {
+        // create a list of strings to be returned
+        List<String> answer = new ArrayList<>();
+        
+        // create a hashset of the top row
+        String elements_top[] = { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P" };
+        Set top = new HashSet(Arrays.asList(elements_top));
+        
+         // create a hashset of the middle row
+        String elements_mid[] = { "A", "S", "D", "F", "G", "H", "J", "K", "L" };
+        Set mid = new HashSet(Arrays.asList(elements_mid));
+        
+         // create a hashset of the bottom row
+        String elements_bottom[] = { "Z", "X", "C", "V", "B", "N", "M" };
+        Set bottom = new HashSet(Arrays.asList(elements_bottom));
+        
+         // for each word
+        for(int i=0;i<words.length;i++){
+        // reinitialize the current row
+            row = "";
+        // set the flag to zero indicating rules are being followed
+            int flag = 0;
+        // for each character in the word
+            for(int j = 0;j<words[i].length(); j++){
+            //convert the character to a string
+                String temp = Character.toString(words[i].charAt(j));
+                // if the uppercase version is present in top row
+                if(top.contains(temp.toUpperCase())){
+                    if(!checkRow("top")){
+                        flag = 1;
+                        break;
+                    }
+                }
+                if the uppercase version is present in middle row
+                else if(mid.contains(temp.toUpperCase())){
+                     if(!checkRow("mid")){
+                        flag = 1;
+                        break;
+                    }   
+                }
+                if the uppercase version is present in bottom row
+                else if(bottom.contains(temp.toUpperCase())){
+                    if(!checkRow("bottom")){
+                        flag = 1;
+                        break;
+                    }
+                }
+            }
+            // if all rules are followed i.e the alphabets are from the same row in the keyboard. add them to the final answer
+            if(flag == 0){
+                answer.add(words[i]);
+            }
+        }
+        // return the array version of the list
+        return answer.toArray(new String[answer.size()]); 
+    }
+    
+    // this function runs a check to see if there any violations with the alphabets and the current row
+    public boolean checkRow(String x){
+    // first alphabet is being processed, row is set for the first time
+        if(row.equals("")){
+            row = x;
+            return true;
+        }
+        return row.equals(x) ? true : false;
+    }
+}
