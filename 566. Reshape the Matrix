@@ -1,0 +1,27 @@
+public class Solution {
+    public int[][] matrixReshape(int[][] nums, int r, int c) {
+        //get number of rows of nums
+        int current_r = nums.length;
+        // get number of column of nums
+        int current_c = nums[0].length;
+        //if row column product is not equivalent its not legal, return original
+        if((current_r*current_c) != (r*c))
+            return nums;
+        // create result matrix with r rows and c columns
+        int[][] result = new int[r][c];
+        int row = 0, column = 0;
+        // insert values from nums into result while traversing row wise
+        for(int x = 0; x<nums.length;x++)
+            for(int y=0;y<nums[0].length;y++)
+            {
+                if(column==c){
+                    column = 0;
+                    row++;
+                }
+                result[row][column] = nums[x][y];
+                column++;
+            }
+             
+        return result;
+    }
+}
