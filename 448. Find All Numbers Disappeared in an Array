@@ -1,0 +1,20 @@
+public class Solution {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+    // parse array and set indices to negative if they are found. eg. if you find 4 then index = 3, if value at position 3 is not -ve, make -ve
+        for(int i=0;i<nums.length;i++){
+            int index = Math.abs(nums[i]) - 1;
+            if(nums[index] > 0){
+                nums[index] = -Math.abs(nums[index]);
+            }
+        }
+        
+        List<Integer> missing = new ArrayList<>();
+        
+        //parse array again, if +ve values are found in the array, add index + 1 to missing numbers due zero based array but numbers starting at 1
+        for(int i = 0;i <nums.length;i++){
+            if(nums[i]>0)
+                missing.add(i+1);
+        }
+        return missing;
+    }
+}
