@@ -1,0 +1,25 @@
+public class Solution {
+    public int distributeCandies(int[] candies) {
+        // if there are no candies
+        if(candies.length == 0)
+            return 0;
+        // create a hashmap that stores the candy kind as key and corresponding count as the value
+        Map<Integer,Integer> candy_count = new HashMap<>();
+        // for each candy in the array
+        for(int i=0;i<candies.length;i++){
+            // increment count if already present
+            if(candy_count.containsKey(candies[i])){
+                int count = candy_count.get(candies[i]);
+                candy_count.put(candies[i],count+1);
+            }
+            // else set count to one for that kind of candy
+            else{
+                candy_count.put(candies[i],1);
+            }
+        }
+        // get count of unique candies present
+        int count = candy_count.size();
+        // if the number of unique candies is lesser than half of candy count, then she gets all unique candies else she gets exactly half of the candies cuz she cannot get more
+        return Math.min(count,candies.length/2);
+    }
+}
