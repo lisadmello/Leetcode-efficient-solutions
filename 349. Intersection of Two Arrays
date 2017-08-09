@@ -1,0 +1,21 @@
+public class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        //create a set of unique numbers in first array
+        Set<Integer> first_array = new HashSet<>();
+        for(int i=0;i<nums1.length;i++)
+            first_array.add(nums1[i]);
+        // create a result set to store common elements
+        Set<Integer> result_array = new HashSet<>();
+        // for each element in second array
+        for(int i=0;i<nums2.length;i++)
+            // if they are present in first set, they are common and should be added
+            if(first_array.contains(nums2[i]))
+                result_array.add(nums2[i]);
+        // convert result set into int array and return
+        int[] result = new int[result_array.size()];
+        int index = 0;
+        for(int x: result_array)    
+            result[index++] = x;
+        return result;
+    }
+}
