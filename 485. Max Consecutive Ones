@@ -1,0 +1,33 @@
+public class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+        //set max to zero
+        int max = 0;
+        // flag indicates whether we have started counting consecutive ones
+        // count indicates current count of consecutive ones
+        int flag = 0,count=0;
+        //for each element in the array
+        for(int i=0;i<nums.length;i++){
+            //if element is one and flag is set to zero, we initialize new count as one and change the flag status to one
+            if(nums[i]==1 && flag==0){  
+                flag = 1;
+                count = 1;
+            }
+            //if element is one and flag is set, we increment count of consecutive ones
+            else if(nums[i]==1 && flag==1){
+                count+=1;
+            }
+            //if element is zero and flag is set, we check if new count is greater than max, if so we set max to new count. We also change               flag status to zero
+            else if(nums[i]==0 && flag==1){
+                if(count>max)
+                    max = count;
+                flag = 0;
+            }
+        }
+        // if flag is still set even after array completion, we should compare max and count
+        if(flag==1){
+            if(count>max)
+                max=count;
+        }
+        return max;
+    }
+}
