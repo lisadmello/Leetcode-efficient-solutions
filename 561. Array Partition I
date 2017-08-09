@@ -1,0 +1,16 @@
+public class Solution {
+    public int arrayPairSum(int[] nums) {
+    // initialize the sum
+        int sum=0;
+    // return 0 if array is empty
+        if(nums.length==0)
+            return sum;
+     // Sort the elements in ascending order
+        Arrays.sort(nums);
+     // Add up all the elements at the even positions of the array as they will give min values but max possible sum
+        for(int i=0;i<nums.length;i=i+2){
+            sum+=nums[i];
+        }
+        return sum;
+    }
+}
