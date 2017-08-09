@@ -1,0 +1,14 @@
+public class Solution {
+    public void moveZeroes(int[] nums) {
+    // j will increment with i as long as no zero if found. If a zero is found, then j stops at that index and when a non zero number is found at i they swap and j increments by 1
+    int j = 0;
+    for(int i = 0; i < nums.length; i++) {
+        if(nums[i] != 0) {
+            int temp = nums[j];
+            nums[j] = nums[i];
+            nums[i] = temp;
+            j++;
+        }
+    }
+}
+}
