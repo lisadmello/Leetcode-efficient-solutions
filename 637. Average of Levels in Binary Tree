@@ -1,0 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<Double> averageOfLevels(TreeNode root) {
+        // creata a list for the average at each level
+        List<Double> averageList = new ArrayList<>();
+        // if the root is empty return your empty list
+        if(root == null)
+            return averageList;
+        // create a queue for BFS
+        List<TreeNode> queue = new ArrayList<>();
+        // add the root node as the first element of the queue
+        queue.add(root);
+        // while nodes are present in the queue to process
+        while(!queue.isEmpty()){
+            // total number of nodes to process at this level
+            int nodes_on_level = queue.size();
+            // average for this level is initialized to zero
+            double avg = 0;
+            // for each node present on the level
+            for(int i=0;i<nodes_on_level;i++){
+                // remove the first node in the queue
+                TreeNode parent = queue.remove(0);   
+                // add it as a sum to the computed average
+                avg += (double)parent.val;
+                // if the left child is not null we add it to the queue
+                if(parent.left!=null)
+                    queue.add(parent.left);
+                // if the right child is not null we add it to the queue
+                if(parent.right!=null)
+                    queue.add(parent.right);
+            }
+            // compute average over nodes on that level
+            avg = avg / nodes_on_level;
+            // add it to the list
+            averageList.add(avg);
+        }
+        // return your answer
+        return averageList;
+    }
+}
