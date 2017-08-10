@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        //create a product node that will be the result of merging two nodes and make a recursive call to generate left&right children
+        TreeNode merge_child =  new TreeNode(0);
+        //if both nodes are null return null
+        if(t1 == null && t2==null){
+            return null;
+        }
+        // if either one is not null, the merged node will have a value of the not null node
+        else if(t1 == null && t2!=null){
+             merge_child.val = t2.val;
+             merge_child.left = mergeTrees(null,t2.left);
+             merge_child.right = mergeTrees(null,t2.right);
+        }
+        // if either one is not null, the merged node will have a value of the not null node
+        else if(t1 !=null && t2 ==null){
+            merge_child.val =  t1.val;
+            merge_child.left = mergeTrees(t1.left,null);
+            merge_child.right = mergeTrees(t1.right,null);
+        }
+        // if both are not null, the result node will have a sum of both nodes
+        else if(t1 !=null && t2 !=null){
+            merge_child.val = t1.val + t2.val;
+            merge_child.left = mergeTrees(t1.left,t2.left);
+            merge_child.right = mergeTrees(t1.right,t2.right);
+        }
+        //return the merged node
+        return merge_child;
+             
+    }
+}
