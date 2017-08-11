@@ -1,0 +1,53 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    // create a table that store the differences and the counts they have been seen eg for node 5 and target 9, we store <4,1>
+    Map<Integer,Integer> table = new HashMap<>();
+    public boolean findTarget(TreeNode root, int k) {
+        // if empty root return false
+        if(root == null)
+            return false;
+        // create the hash map of differences and their counts
+        createTable(root,k);
+        // traverse tree and see if you find any value in the hashmap, if so return true
+        return findDifference(root,k);
+    }
+    
+    public void createTable(TreeNode root,int target){
+        if(root==null)
+            return;
+        if(table.containsKey(target-root.val))
+            table.put(target-root.val, table.get(target-root.val)+1);
+        else
+            table.put(target-root.val, 1);
+        createTable(root.left,target);
+        createTable(root.right,target);
+    }
+    
+    public boolean findDifference(TreeNode root,int k){
+        if(root==null)
+            return false;
+        int findkey = root.val;
+        int difference = k - findkey;
+        if(table.containsKey(findkey)){
+            if(findkey == difference){
+                if(table.get(findkey) > 1){
+                    return true;
+                }
+            }
+            else{
+                return true;   
+            }
+        }
+        boolean left = findDifference(root.left,k);
+        boolean right = findDifference(root.right,k);
+        return left | right;
+    }
+}
