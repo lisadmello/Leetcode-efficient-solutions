@@ -1,0 +1,36 @@
+public class Solution {
+    public int countSubstrings(String s) {
+        int count = s.length();
+        if(s.length()==0)
+            return count;
+        // a dp 2x2 matrix
+        boolean[][] dp_matrix = new boolean[s.length()][s.length()];
+        // set all values to true as default
+        for(int i=0;i<dp_matrix.length;i++)
+            for(int  j=0;j<dp_matrix[0].length;j++)
+                dp_matrix[i][j] = true;
+        // for window length starting at 2 till string length
+        for(int len=2;len<=s.length();len++){
+            // set start index of window
+            for(int start=0;start<s.length();start++){
+                //set end index of window
+                int end = start + len - 1;
+                // if end is beyond boundary increase window size and start over
+                if(end>=s.length())
+                    break;
+                // if the start and end characters are same, it is a palindrome only if inner substring is a palindrome
+                if(s.charAt(start) == s.charAt(end)){
+                    if(dp_matrix[start+1][end-1]){
+                        count++;
+                    }
+                    // set the value based on diagonal value
+                    dp_matrix[start][end] = dp_matrix[start+1][end-1];
+                }
+                else
+       
+                    dp_matrix[start][end] = false;
+            }
+        }
+        return count;
+    }
+}
