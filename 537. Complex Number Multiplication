@@ -1,0 +1,42 @@
+public class Solution {
+    public String complexNumberMultiply(String a, String b) {
+        // create string to return
+        StringBuilder ans = new StringBuilder();
+        // int arrays to store real and img parts of the string
+        int[] one = breakDown(a);
+        int[] two = breakDown(b);
+        // mutiply the two complex numbers using the int values
+        ans.append(multiply(one,two));
+        // return the result
+        return ans.toString();
+      }
+        
+    public int[] breakDown(String x){
+        // an array that store real part at 0 and imaginary part at 1
+        int[] ans = new int[2];
+        // split the string at occurence of plus sign
+        String[] part = x.split("\\+");
+        // get value of real part
+        ans[0] = Integer.parseInt(part[0]);
+        // get value of imaginary part
+        ans[1] = Integer.parseInt(part[1].substring(0,part[1].length()-1));
+        // return the array with both parts
+        return ans;
+    }
+    
+    public String multiply(int[] x,int[] y){
+        StringBuilder ans = new StringBuilder();
+        // get the real value by mutiplication
+        int real = (x[0]*y[0]) + (-(x[1]*y[1]));
+        // get the imaginary value by multiplication
+        int img = (x[0]*y[1]) + (x[1]*y[0]);
+        // append them to create final answer of the for 1+-2i
+        ans.append(Integer.toString(real));
+        ans.append("+");
+        ans.append(Integer.toString(img));
+        ans.append("i");
+        // return answer
+        return ans.toString();
+    }
+    
+}
