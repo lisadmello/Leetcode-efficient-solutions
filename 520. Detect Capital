@@ -1,0 +1,23 @@
+public class Solution {
+    public boolean detectCapitalUse(String word) {
+        // of the word has no or one characters return true
+        if(word.length()==0 || word.length() == 1)
+            return true;
+        // get first character
+        char first = word.charAt(0);
+        //get substring of remaining characters
+        String x = word.substring(1,word.length());
+        // conver remaining to Upper and Lower Cases
+        String upper = x.toUpperCase();
+        String lower = x.toLowerCase();
+        // if the first is Uppercase,remaining should be all upper or all lower
+            if(Character.isUpperCase(first))
+                return upper.equals(x) || lower.equals(x);
+       // if the first is Lowercase,remaining should be all all lower
+            else if(Character.isLowerCase(first))
+                return lower.equals(x);
+            else
+                return false;
+                
+        }
+}
