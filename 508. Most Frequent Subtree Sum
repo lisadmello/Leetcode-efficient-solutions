@@ -1,0 +1,66 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    // this map stores data in the following format:
+    //  Sum found : (number of times it has been found)
+    Map<Integer, Integer> subtreesum = new HashMap<>();  
+    
+    public int[] findFrequentTreeSum(TreeNode root) {
+            // if root is empty return an empty array
+            if(root == null)    return new int[0];
+            // call function that sets data in the map after parsing the tree
+            int total = myFunction(root);
+            // set max value as smallest value possible
+            int max = Integer.MIN_VALUE;
+            // create a map for bucket sort
+            // this stores the frequencies as keys and the list of sums that have that frequency
+            // it does this after parsing the previous map
+            Map<Integer,List<Integer>> buckets = new HashMap<>();
+            // iterator through the key, value pairs of previous hashmap for bucket sort
+            Iterator it = subtreesum.entrySet().iterator();
+            while(it.hasNext())
+            {
+                Map.Entry pair = (Map.Entry)it.next();
+                // keep track of max frequency
+                if((int)pair.getValue()>max;
+                    max= (int)pair.getValue();
+                // perform bucket sort
+                if(buckets.containsKey(pair.getValue())){
+                    List<Integer> temp = buckets.get(pair.getValue());
+                    temp.add((int)pair.getKey());
+                    buckets.put((int)pair.getValue(),temp);
+                }
+                else{
+                    List<Integer> temp = new ArrayList<>();
+                    temp.add((int)pair.getKey());
+                    buckets.put((int)pair.getValue(),temp);
+                }
+            }
+            // convert the returned list of sums having the maximum frequency as an array
+            int[] ans = new int[buckets.get(max).size()];
+            for(int i=0;i<buckets.get(max).size();i++){
+                ans[i] = buckets.get(max).get(i);
+            }
+            return ans;
+    }
+    
+    // this function parses the tree and generates the sum for each node and stores it in a map
+    public int myFunction(TreeNode root){
+        if(root==null)
+            return 0;
+        int value = root.val + myFunction(root.left) + myFunction(root.right);
+        if(subtreesum.containsKey(value))
+            subtreesum.put(value,subtreesum.get(value)+1);
+        else
+            subtreesum.put(value,1);
+        return value;
+    }
+    
+}
