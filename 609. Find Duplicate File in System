@@ -1,0 +1,54 @@
+public class Solution {
+    // create a hashmap called directory that stores content as key and lists of filepaths as value
+    Map<String,List<String>> dir = new HashMap<>();
+    public List<List<String>> findDuplicate(String[] paths) {
+        List<List<String>> ans = new ArrayList<>();
+        // if the pathlist is empty return empty lisy
+        if(paths.length == 0)
+            return ans;
+        // parse each string and store it in the hashmap
+        for(int i=0;i<paths.length;i++){
+            parseAndStore(paths[i]);
+        }
+        // return the lists appended to a new list if and only if the count > 1 indicating duplicates
+        return parseMap();
+    }
+    
+    public void parseAndStore(String x){
+        if(x.length() == 0)
+            return;
+        String[] parts = x.split(" ");
+        String directory = parts[0];
+        System.out.println(directory);
+        String file_name = "",content = "";
+        for(int i=1;i<parts.length;i++){
+            int strbrace = parts[i].indexOf("(");
+            int endbrace = parts[i].indexOf(")");
+            file_name = parts[i].substring(0,strbrace);
+            content = parts[i].substring(strbrace+1,endbrace);
+            if(dir.containsKey(content)){
+                List<String> temp = dir.get(content);
+                temp.add(directory + "/" + file_name);
+                dir.put(content,temp);
+                
+            }
+            else{
+                List<String> temp = new ArrayList<>();
+                temp.add(directory + "/" + file_name);
+                dir.put(content,temp);
+            }
+        }
+    }
+    
+    public List<List<String>> parseMap(){
+        List<List<String>> ans = new ArrayList<>();
+        Iterator it = dir.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry pair = (Map.Entry)it.next();
+            List<String> temp = (List<String>)pair.getValue();
+            if(temp.size()>1)
+                ans.add(temp);
+        }
+        return ans;
+    }
+}
