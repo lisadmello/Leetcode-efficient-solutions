@@ -1,0 +1,31 @@
+public class Solution {
+    public String optimalDivision(int[] nums) {
+        // answer to be returned
+        StringBuilder ans = new StringBuilder();
+        // if string is empty
+        if(nums.length == 0)
+            return ans.toString();
+        // append the first digit
+        ans.append(nums[0]);
+        // if length is one
+        if(nums.length == 1){
+            return ans.toString();
+        }
+        // if only two numbers
+        if(nums.length == 2)
+        {
+            ans.append("/");
+            ans.append(nums[1]);
+            return ans.toString();
+        }
+        // else divide (first) by (remaining)
+        ans.append("/(");
+        for(int i=1;i<nums.length-1;i++){
+            ans.append(nums[i]);
+            ans.append("/");
+        }
+        ans.append(nums[nums.length-1]);
+        ans.append(")");
+        return ans.toString();   
+    }
+}
