@@ -1,0 +1,33 @@
+public class Solution {
+    public String[] findRestaurant(String[] list1, String[] list2) {
+        List<String> comm = new ArrayList<>();
+        int min = Integer.MAX_VALUE;
+        Map<String, Integer> map1 = new HashMap<>();
+        for(int i=0;i<list1.length;i++)
+        {
+            map1.put(list1[i],i);
+        }
+        Map<String,Integer> map2 = new HashMap<>();
+        for(int j=0;j<list2.length;j++)
+        {
+            if(map1.containsKey(list2[j]))
+            {
+                int i = map1.get(list2[j]);
+                if((i+j)<min)
+                    min = i+j;
+                map2.put(list2[j],(i+j));
+            }
+        }
+        
+        Iterator it = map2.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if((int)pair.getValue()==min)
+                comm.add((String)pair.getKey());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        
+        return comm.toArray(new String[comm.size()]);
+            
+    }
+}
