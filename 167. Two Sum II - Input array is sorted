@@ -1,0 +1,60 @@
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        Map<Integer,List<Integer>> mp = new HashMap<>();
+        int[] ans = new int[2];
+        for(int i=0;i<numbers.length;i++){
+            int val = target - numbers[i];
+            if(mp.containsKey(val)){
+                List<Integer> x = mp.get(val);
+                x.add(i+1);
+                mp.put(val, x);
+            }
+            else{
+                List<Integer> x = new ArrayList<>();
+                x.add(i+1);
+                mp.put(val, x);
+            }
+        }
+        
+        for(int i=0;i<numbers.length;i++){
+            if(mp.containsKey(numbers[i])){
+                List<Integer> indices = mp.get(numbers[i]);
+                if(indices.size() == 1){
+                    if((int)indices.get(0) !=  (i+1))
+                        if((int)indices.get(0) <  (i+1)){
+                            ans[0] = (int)indices.get(0);
+                            ans[1] = i+1;
+                            break;
+                        }
+                        else{
+                            ans[1] = (int)indices.get(0);
+                            ans[0] = i+1;
+                            break;
+                        }
+                }
+                if(indices.size() == 2){
+                    int value = -1;
+                    if((int)indices.get(0) == i+1){
+                        value = (int)indices.get(1); 
+                    }
+                    else{
+                        value = (int)indices.get(0); 
+                    }
+                    
+                    if(value < (i+1)){
+                        ans[0] = value;
+                        ans[1] = i+1;
+                        break;
+                    }
+                    else{
+                        ans[1] = value;
+                        ans[0] = i+1;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        return ans;
+    }
+}
