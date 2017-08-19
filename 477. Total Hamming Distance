@@ -1,0 +1,28 @@
+/*
+
+Notice the total hamming distance is the sum of the total hamming distance for each of the i-th bits separately.
+
+So, let's consider the i-th column, which consists of numbers chosen from {0, 1}. The total hamming distance would be the number of pairs of numbers that are different. That is,
+
+Total hamming distance for the i-th bit =
+(the number of zeros in the i-th position) *
+(the number of ones in the i-th position).
+
+We then add all of these together to get our answer.
+
+*/
+
+class Solution {
+    public int totalHammingDistance(int[] nums) {
+        int total = 0,n=nums.length;
+        for(int i=0;i<32;i++){
+            int bitcount = 0;
+            for(int j=0;j<n;j++){
+                bitcount = bitcount + ((nums[j] >> i) & 1);
+            }
+            total = total + (bitcount * (n - bitcount)); 
+        }
+        return total;
+    }
+    
+}
