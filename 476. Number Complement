@@ -1,0 +1,8 @@
+class Solution {
+    public int findComplement(int num) {
+        // eg for 5 = 101  mask= 111, with 3 ones from rightmost followed by zeros till leftmost
+        int mask = (Integer.highestOneBit(num) << 1) - 1;
+        // return the and of the inversion and mask to get flipped bits
+        return ~num & mask;
+    }
+}
