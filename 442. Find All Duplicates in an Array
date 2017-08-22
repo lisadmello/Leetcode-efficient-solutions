@@ -1,0 +1,25 @@
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+      // create a list of answers to return
+        List<Integer> dups = new ArrayList<>();
+        // if there are no array elements we can return dups
+        if(nums.length == 0)
+            return dups;
+        // for each element in the array
+        for(int i = 0;i<nums.length;i++){
+            // we compute an index which is one less than the absolute value of the element
+            int index = Math.abs(nums[i]) - 1;
+            // we then get the current value at that index
+            int val = nums[index];
+            // if the value is set to negative we have found a duplicate
+            if(val < 0){
+                dups.add(index+1);
+            }
+            // else we set that value to negative
+            else{
+                nums[index] = -nums[index];
+            }
+        }
+        return dups;
+    }
+}
