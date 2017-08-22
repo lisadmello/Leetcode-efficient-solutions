@@ -1,0 +1,37 @@
+class Solution {
+    public int findPoisonedDuration(int[] timeSeries, int duration) {
+        int start_prev=0,start_next=0,end_prev=0,end_next=0,time=0;
+        for(int i=0;i<timeSeries.length;i++){
+        //first case of poisoning
+        if(end_prev == 0){
+           // set the previous interval start time
+            start_prev = timeSeries[i];
+           // set the previous interval end time
+            end_prev = timeSeries[i] + duration - 1; 
+           // compute poison time
+            time+=duration;
+        }
+        else{
+            // set next interval start time
+            start_next = timeSeries[i];
+            // set next interval end time
+            end_next = timeSeries[i] + duration - 1;
+            // if the two intervals do not overlap, compute normally
+            if(end_prev<start_next){
+                time+=duration;
+                start_prev = start_next;
+                end_prev = end_next; 
+            }
+            // since there is overlap we need to subtract already computed portion
+            else if(start_next<=end_prev){
+                time+=end_next - end_prev;
+                start_prev = start_next;
+                end_prev = end_next;
+            }
+        }
+           
+        }
+        return time;
+        
+    }
+}
