@@ -1,0 +1,12 @@
+class Solution {
+    public boolean isPerfectSquare(int num) {
+      // if the number is one
+        if(num == 1)
+            return true;
+      //iterate through numbers from 1 till n/2 to check if anything results in generating the perfect square input
+        for(int i=1;i<=num/2;i++)
+            if(i*i == num)
+                return true;
+        return false;
+    }
+}
