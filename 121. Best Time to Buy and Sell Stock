@@ -1,0 +1,13 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        int glo_min = Integer.MAX_VALUE;
+        int profit = 0;
+        for(int i=0;i<prices.length;i++){
+            if(prices[i] < glo_min)
+                glo_min = prices[i];
+            if((prices[i] - glo_min) > profit)
+                profit = prices[i] - glo_min;
+        }
+        return profit;
+    }
+}
