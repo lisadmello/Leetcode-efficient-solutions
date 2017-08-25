@@ -1,0 +1,89 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    int carry = 0;
+    
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode h1 = reverse(l1);
+        ListNode h2 = reverse(l2);
+        return reverse(add(h1,h2,0));
+    }
+    
+    public ListNode add(ListNode l1, ListNode l2,int carry){
+        if(l1 == null && l2 == null){
+            if(carry!=0){
+                ListNode l3 = new ListNode(carry);
+                return l3;
+            }
+            else{
+                return null;
+            }
+        }
+        if(l1==null){
+            int v = 0;
+            if(carry!=0){
+                v = l2.val + carry;
+            }
+            else{
+                v = l2.val;
+            }
+            carry = (v)/10;
+            int val = (v)%10;
+            ListNode l3 = new ListNode(val);
+            l3.next = add(l1,l2.next,carry);
+            return l3;
+        }
+        if(l2==null){
+            int v = 0;
+            if(carry!=0){
+                v = l1.val + carry;
+            }
+            else{
+                v = l1.val;
+            }
+            carry = (v)/10;
+            int val = (v)%10;
+            ListNode l3 = new ListNode(val);
+            l3.next = add(l1.next,l2,carry);
+            return l3;
+        }
+        if(l1!=null && l2!=null){
+            int v = 0;
+            if(carry!=0){
+                v = l1.val + l2.val + carry;
+            }
+            else{
+                v = l1.val + l2.val;
+            }
+            carry = (v)/10;
+            int val = (v)%10;
+            ListNode l3 = new ListNode(val);
+            l3.next = add(l1.next,l2.next,carry);
+            return l3;
+        }
+        return null;
+    }
+    
+    public ListNode reverse(ListNode l1){
+        if(l1==null) return l1;
+        ListNode prev = null, curr = null, next = null;
+        curr = l1;
+        next = curr.next;
+        while(curr!=null){
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            if(curr!=null)
+                next = curr.next;
+        }
+        
+        return prev;
+        
+    }
+}
