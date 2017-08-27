@@ -1,0 +1,41 @@
+class Solution {
+    public String frequencySort(String s) {
+        StringBuilder ans = new StringBuilder();
+        Map<Character,Integer> mp = new HashMap<Character,Integer>();
+        for(int i=0;i<s.length();i++){
+            if(mp.containsKey(s.charAt(i))){
+                mp.put(s.charAt(i), mp.get(s.charAt(i))+1);
+            }
+            else{
+                mp.put(s.charAt(i), 1);
+            }
+        }
+        MyComparator vc= new MyComparator(mp);
+        Map<Character,Integer> map = new TreeMap<>(vc);
+        map.putAll(mp);
+        Iterator it = map.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry)it.next();
+            int val = (int) pair.getValue();
+            for(int i=0;i<val;i++)
+                ans.append((char)pair.getKey());
+        }
+        return ans.toString();
+    }
+}
+
+class MyComparator implements Comparator<Character>{
+        Map<Character,Integer> mp;
+        
+        public MyComparator(Map<Character,Integer> base){
+            this.mp = base;
+        }
+        
+        public int compare(Character a,Character b){
+            if(mp.get(a)>=mp.get(b))
+                return -1;
+            else
+                return 1;
+        }
+    }
