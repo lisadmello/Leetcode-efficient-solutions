@@ -1,0 +1,30 @@
+class Solution {
+    public String replaceWords(List<String> dict, String sentence) {
+        StringBuilder ans = new StringBuilder();
+        String[] words = sentence.split(" ");
+        for(int i=0;i<words.length;i++){
+            String new_word = findRoot(dict,words[i]);
+            ans.append(new_word);
+            ans.append(" ");
+        }
+        return ans.toString().trim();
+    }
+    
+    public String findRoot(List<String> dict, String word){
+        String root = "";
+        for(int i=0;i<dict.size();i++){
+            if(word.indexOf(dict.get(i)) == 0){
+                if(root.length() == 0){
+                    root = dict.get(i);
+                }
+                else if(dict.get(i).length() < root.length())
+                    root = dict.get(i);
+            }
+        }
+        if(root.length() == 0)
+            root = word;
+        return root;
+    }
+    
+}
+
