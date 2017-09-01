@@ -1,0 +1,45 @@
+class Solution {
+    public int[][] imageSmoother(int[][] M) {
+        int[][] ans = new int[M.length][M[0].length];
+        for(int i=0;i<M.length;i++){
+            for(int j=0;j<M[0].length;j++){
+                ans[i][j] = smoothen(i,j,M);
+            }
+        }
+        return ans;
+    }
+    
+    public int smoothen(int row, int column, int[][] M){
+        float avg = 0;
+        int count = 1;
+        avg = M[row][column];
+        if(row-1>=0){
+            count++;
+            avg+= M[row-1][column];
+        }if((row-1)>=0 && (column+1)<M[0].length){
+            count++;
+            avg+= M[row-1][column+1];
+        }if(column+1<M[0].length){
+            count++;
+            avg+= M[row][column+1];
+        }if((row+1)<M.length && (column+1)<M[0].length){
+            count++;
+            avg+= M[row+1][column+1];
+        }if((row+1)<M.length){
+            count++;
+            avg+= M[row+1][column];
+        }if((row+1)<M.length && (column-1)>=0){
+            count++;
+            avg+= M[row+1][column-1];
+        }if((column-1)>=0){
+            count++;
+            avg+= M[row][column-1];
+        }if((column-1)>=0 && (row-1)>=0){
+            count++;
+            avg+= M[row-1][column-1];
+        }
+        
+        return (int)Math.floor(avg/=count);
+    }
+    
+}
