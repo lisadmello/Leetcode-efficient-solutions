@@ -1,0 +1,37 @@
+class Solution {
+    public int numberOfArithmeticSlices(int[] A) {
+        if(A.length<3)
+            return 0;
+        int count = 0;
+        boolean[][] dp = new boolean[A.length][A.length];
+        int len = 3;
+        for(int i=0;i<A.length;i++)
+        {
+            int j = i + len - 1;
+            if(j>=A.length)
+                break;
+                if(isSlice(A,i,j) == true)
+                    dp[i][j] = true;
+                else
+                    dp[i][j] =  false;
+            if(dp[i][j]==true) 
+                count++;
+        }
+        for(len = 4;len<=A.length;len++){
+            for(int i = 0;i<A.length;i++){
+                int j = i + len - 1;
+                if(j>=A.length)
+                    break;
+                dp[i][j] = dp[i][j-1] && dp[i+1][j];
+                if(dp[i][j]==true) 
+                    count++;
+            }
+        }
+        
+        return count;
+    }
+    
+    public boolean isSlice(int[] arr, int i, int j){
+        return arr[i+1] - arr[i] == arr[j] - arr[j-1];
+    }
+}
