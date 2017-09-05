@@ -1,0 +1,48 @@
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> comb = new ArrayList<>();
+        if(digits.length() == 1 && (digits.charAt(0)=='1' || digits.charAt(0)== '0'))
+            return comb;
+        if(digits.length() == 0)
+            return comb;
+        String poss = getAlphabets(digits.charAt(0));
+        System.out.println("posss"+poss);
+        List<String> rem = letterCombinations(digits.substring(1));
+        System.out.println("rem"+rem);
+        for(int j=0;j<poss.length();j++){
+            if(rem.size() == 0){
+                comb.add(String.valueOf(poss.charAt(j)));
+            }
+            else{
+                for(int k = 0;k<rem.size();k++){
+                    comb.add(poss.charAt(j)+rem.get(k));
+                }
+            }
+        }
+        return comb;
+    }
+    
+    public String getAlphabets(char x){
+        switch(x){
+            case '2':
+                return "abc";
+            case '3':
+                return "def";
+            case '4':
+                return "ghi";
+            case '5':
+                return "jkl";
+            case '6':
+                return "mno";
+            case '7':
+                return "pqrs";
+            case '8':
+                return "tuv";
+            case '9':
+                return "wxyz";
+            default:
+                return "";
+        }
+
+    }
+}
