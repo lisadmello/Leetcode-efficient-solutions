@@ -1,0 +1,65 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    
+    PriorityQueue<Integer> maxheap; 
+    int counter = 0;
+    public int kthSmallest(TreeNode root, int k) {
+        maxheap = new PriorityQueue<>(k,new Comparator<Integer>() {
+            public int compare(Integer x, Integer y) {
+            if (x < y) return 1;
+            if (x > y) return -1;
+            return 0;
+            }
+            
+        });
+        counter = k;
+        traverseTree(root);
+        return maxheap.peek();
+    
+    
+    //DOUBTFUL SOUTION MARKED WITH COMMENTS TRY IT!
+//         int count = 0;
+// int result = Integer.MIN_VALUE;
+
+// public int kthSmallest(TreeNode root, int k) {
+//     traverse(root, k);
+//     return result;
+// }
+
+// public void traverse(TreeNode root, int k) {
+//     if(root == null) return;
+//     traverse(root.left, k);
+//     count ++;
+//     if(count == k) result = root.val;
+//     traverse(root.right, k);       
+// }
+    
+    
+    
+    }
+    
+    public void traverseTree(TreeNode root){
+        System.out.println(maxheap);
+        if(root==null)
+            return;
+        if(counter > 0){
+            maxheap.add(root.val);
+            counter--;
+        }
+        else{
+            if(root.val < maxheap.peek()){
+                maxheap.add(root.val);
+            }
+        }
+        traverseTree(root.left);
+        traverseTree(root.right);
+    }
+}
