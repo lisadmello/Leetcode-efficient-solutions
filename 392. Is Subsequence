@@ -1,0 +1,54 @@
+// class Solution {
+//     public boolean isSubsequence(String s, String t) {
+//         boolean[][] dp = new boolean[s.length()][t.length()];
+//         if(s.length() == 0 && t.length() == 0)
+//             return true;
+//         if(s.length() == 0 && t.length() != 0)
+//             return true;
+//         if(s.length() > 0 && t.length() == 0) 
+//             return false;
+//         if(s.length() > t.length())
+//             return false;
+//         if(s.charAt(0) == t.charAt(0))
+//             dp[0][0] = true;
+        
+
+//         for(int i=1;i<t.length();i++){
+//             if(s.charAt(0) == t.charAt(i)){
+//                 dp[0][i] = true;
+//             }
+//             else{
+//                 dp[0][i] = dp[0][i-1];
+//             }
+//         }
+//         for(int i=1;i<s.length();i++){
+//             dp[i][0] = false;
+//         }
+        
+//         for(int i=1;i<s.length();i++)
+//             for(int j = 1;j<t.length();j++)
+//                 if(s.charAt(i) == t.charAt(j)){
+//                     dp[i][j] = dp[i-1][j-1];
+//                 }
+//                  else{
+//                     dp[i][j] = dp[i-1][j] && dp[i][j-1];
+//                  }
+        
+//         return dp[s.length()-1][t.length()-1];
+//     }
+// }
+
+public class Solution {
+    public boolean isSubsequence(String s, String t) {
+        if (s.length() == 0) return true;
+        int indexS = 0, indexT = 0;
+        while (indexT < t.length()) {
+            if (t.charAt(indexT) == s.charAt(indexS)) {
+                indexS++;
+                if (indexS == s.length()) return true;
+            }
+            indexT++;
+        }
+        return false;
+    }
+}
