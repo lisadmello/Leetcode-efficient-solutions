@@ -1,0 +1,21 @@
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] ans = new int[2];
+        Map<Integer,Integer> np = new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            np.put(target-nums[i],i);
+        }
+        System.out.println(np);
+        for(int i=0;i<nums.length;i++){
+            if(np.containsKey(nums[i])){
+                if(np.get(nums[i])!=i){
+                    ans[0] = i;
+                    ans[1] = (int)np.get(nums[i]);
+                    return ans;
+                }
+                
+            }
+        }
+        return ans;
+    }
+}
