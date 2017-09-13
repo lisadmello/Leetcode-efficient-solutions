@@ -1,0 +1,24 @@
+class Solution {
+    public boolean isHappy(int n) {
+        int slow=n,fast=n;
+        do{
+            slow=compute(slow);
+            fast=compute(fast);
+            fast=compute(fast);
+        }while(slow!=fast);
+        if(slow==1)
+            return true;
+        else
+            return false;
+    }
+    
+    public int compute(int n){
+        int sum = 0;
+        while(n!=0){
+            int digit = n%10;
+            sum+=(digit*digit);
+            n=n/10;
+        }
+        return sum;
+    }
+}
