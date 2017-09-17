@@ -1,0 +1,133 @@
+public class MapSum {
+
+    /** Initialize your data structure here. */ 
+        Map<String,Integer> hm;
+        Trie tree;
+        public MapSum(){
+            this.hm = new HashMap<>();
+            this.tree = new Trie();
+        }
+    
+    public void insert(String key, int val) {
+        hm.put(key,val);
+        System.out.println(hm);
+        tree.insert(key);
+    }
+    
+    public int sum(String prefix) {
+        int sum=0;
+        if(tree.startsWith(prefix)){
+            TrieNode temp = tree.searchNode(prefix);
+            List<String> results = new ArrayList<>();
+            tree.get(prefix.toLowerCase(),temp,results);
+            for(String s:results)
+                sum+=hm.get(s);
+            return sum;
+        }
+            return 0;
+    } 
+}
+
+class TrieNode {
+    TrieNode[] arr;
+    boolean isEnd;
+    // Initialize your data structure here.
+    public TrieNode() {
+        this.arr = new TrieNode[26];
+    }
+ 
+}
+ 
+class Trie {
+    private TrieNode root;
+ 
+    public Trie() {
+        root = new TrieNode();
+    }
+ 
+    public void get(String wordsofar,TrieNode curr,List<String> results){
+        System.out.println(wordsofar);
+        if(curr.isEnd == true)
+           results.add(wordsofar);
+        for(int i=0;i<26;i++)
+        {
+            if(curr.arr[i]!=null){
+                int unicode = 65+i;
+                char character = (char) unicode;
+                String x = wordsofar+character;
+                get(x.toLowerCase(),curr.arr[i],results);
+            }
+        }
+       
+    }
+    
+    // Inserts a word into the trie.
+    public void insert(String word) {
+        word = word.toLowerCase();
+        TrieNode p = root;
+        for(int i=0; i<word.length(); i++){
+            char c = word.charAt(i);
+            int index = c-'a';
+            if(p.arr[index]==null){
+                TrieNode temp = new TrieNode();
+                p.arr[index]=temp;
+                p = temp;
+            }else{
+                p=p.arr[index];
+            }
+        }
+        p.isEnd=true;
+    }
+ 
+    // Returns if the word is in the trie.
+    public boolean search(String word) {
+         word = word.toLowerCase();
+        TrieNode p = searchNode(word);
+        if(p==null){
+            return false;
+        }else{
+            if(p.isEnd)
+                return true;
+        }
+ 
+        return false;
+    }
+ 
+    // Returns if there is any word in the trie
+    // that starts with the given prefix.
+    public boolean startsWith(String prefix) {
+        prefix = prefix.toLowerCase();
+        TrieNode p = searchNode(prefix);
+        if(p==null){
+            return false;
+        }else{
+            return true;
+        }
+    }
+ 
+    public TrieNode searchNode(String s){
+        s = s.toLowerCase();
+        TrieNode p = root;
+        for(int i=0; i<s.length(); i++){
+            char c= s.charAt(i);
+            int index = c-'a';
+            if(p.arr[index]!=null){
+                p = p.arr[index];
+            }else{
+                return null;
+            }
+        }
+ 
+        if(p==root)
+            return null;
+ 
+        return p;
+    }
+}
+
+/**
+ * Your MapSum object will be instantiated and called as such:
+ * MapSum obj = new MapSum();
+ * obj.insert(key,val);
+ * int param_2 = obj.sum(prefix);
+ */
