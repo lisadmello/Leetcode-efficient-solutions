@@ -1,0 +1,48 @@
+public class Codec {
+    String chars="";   
+    Map<String,String> url2code;
+    Map<String,String> code2url;
+    
+    public Codec(){
+        chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; 
+        url2code = new HashMap<>();
+        code2url = new HashMap<>();
+    }
+    
+    // Encodes a URL to a shortened URL.
+    public String encode(String longUrl) {
+        while(!url2code.containsKey(longUrl)){
+            System.out.println("Long:"+longUrl);
+            StringBuilder code = new StringBuilder();
+            Random r = new Random();
+            int max = chars.length()-1;
+            int min = 0;
+            int range = max-min+1;
+            for(int i=0;i<6;i++){
+                int index = r.nextInt(range)+min;
+                System.out.println("Index:"+index);
+                code.append(chars.charAt(index));
+            }
+            String c = code.toString();
+            System.out.println("Code:"+c);
+            if(!code2url.containsKey(c)){
+                code2url.put(c,longUrl);
+                url2code.put(longUrl,c);
+            }
+            System.out.println("Long2code:"+url2code);
+            System.out.println("code2long 1:"+code2url);
+        }
+        return "http://tinyurl.com/"+url2code.get(longUrl);
+    }
+
+    // Decodes a shortened URL to its original URL.
+    public String decode(String shortUrl) {
+        String code = shortUrl.substring(shortUrl.length()-6);
+        System.out.println("code:"+code);
+        return code2url.get(code);
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.decode(codec.encode(url));
