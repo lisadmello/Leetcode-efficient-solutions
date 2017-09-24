@@ -1,0 +1,70 @@
+class Solution {
+    public int calPoints(String[] ops) {
+        MyStack stack = new MyStack();
+        int sum = 0;
+        for(int i=0;i<ops.length;i++){
+            String curr = ops[i];
+            try{
+              int num = Integer.parseInt(curr);
+              stack.push(num);
+                sum+=num;
+            } catch (NumberFormatException e) {
+                if(curr.equals("C")){
+                    sum-= stack.pop();
+                }
+                else if(curr.equals("D")){
+                    int y = stack.getFirstPeek()*2;
+                    sum+=y;
+                    stack.push(y);
+                }else if(curr.equals("+")){
+                    int x = stack.getFirstPeek()+stack.getSecondPeek();
+                    sum+=x;
+                    stack.push(x);
+                }
+                
+            }
+        }
+        return sum;
+    }
+}
+
+class MyStack{
+    List<Integer> st;
+    int top_first=-1;
+    int top_second=-2;
+    
+    public MyStack(){
+        st = new ArrayList<>();
+    }
+    
+    public void push(int x){
+        st.add(x);
+        top_second++;
+        top_first++;
+    }
+    
+    public int getFirstPeek(){
+        if(top_first!=-1)
+            return st.get(top_first);
+        else
+            return 0;
+    }
+    
+    public int getSecondPeek(){
+        if(top_second!=-1)
+            return st.get(top_second);
+        else
+            return 0;
+    }
+    
+    public int pop(){
+        if(top_first>=0){
+            int x = st.remove(top_first);
+            top_first--;
+            top_second--;
+            return x;
+        }
+            return 0;
+    }
+    
+}
